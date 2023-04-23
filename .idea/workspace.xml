@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84195963-708b-461c-b338-4a7f848d5e10" name="Changes" comment="Initial commit.">
+    <list default="true" id="84195963-708b-461c-b338-4a7f848d5e10" name="Changes" comment="Routine updates.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
@@ -39,7 +39,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/Projects/JavaProjects/Packages/Packages/src/main/java/com/atatctech/packages",
+    "last_opened_file_path": "F:/Projects/JavaProjects/Packages/Packages",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -49,6 +49,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Projects\JavaProjects\Packages\Packages" />
       <recent name="F:\Projects\JavaProjects\Packages\Packages\src\main\java\com\atatctech\packages" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -64,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682271663828</updated>
-      <workItem from="1682271666884" duration="1538000" />
+      <workItem from="1682271666884" duration="1828000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1682272421168</created>
@@ -73,7 +74,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682272421168</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Routine updates.">
+      <created>1682273305369</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682273305369</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Routine updates.">
+      <created>1682273370327</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682273370327</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -81,6 +96,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit." />
+    <MESSAGE value="Routine updates." />
+    <option name="LAST_COMMIT_MESSAGE" value="Routine updates." />
   </component>
 </project>
