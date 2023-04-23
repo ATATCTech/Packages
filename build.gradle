@@ -1,9 +1,13 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    id 'signing'
 }
 
+apply plugin: 'maven-publish'
+
 group 'com.atatctech'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -13,6 +17,59 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'packages'
+            description = 'Fundamental packages.'
+            from components.java
+
+            pom {
+                name = 'Packages'
+                description = 'Fundamental packages.'
+                url = 'https://github.com/ATATCTech/Packages'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'ATATCTech'
+                        name = 'ATATCTech'
+                        email = 'email@atatctech.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git:github.com/ATATCTech/Packages.git'
+                    developerConnection = 'scm:git:https://github.com/ATATCTech/Packages.git'
+                    url = 'https://github.com/ATATCTech/Packages'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+            if (project.version.toString().endsWith("-SNAPSHOT")) {
+                url = "https://s01.oss.sonatype.org/content/repositories/snapshots"
+            } else {
+                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            }
+            credentials {
+                username = findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
+                password = findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications.mavenJava)
+}
+
 
 test {
     useJUnitPlatform()
