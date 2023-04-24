@@ -2,6 +2,7 @@ package com.atatctech.packages.concurrent.rl;
 
 import com.atatctech.packages.concurrent.rl.exception.MaxRate;
 import com.atatctech.packages.log.Log;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class RateLimiter {
     protected Log.Time lastReplenishment = new Log.Time();
@@ -14,7 +15,7 @@ public abstract class RateLimiter {
         bucket = new Bucket(unitAmount, unitAmount);
     }
 
-    public RateLimiter(long unitAmount, Log.Time.TimePeriod interval) {
+    public RateLimiter(long unitAmount, Log.Time.@NotNull TimePeriod interval) {
         this.unitAmount = unitAmount;
         this.interval = interval.getMilliseconds();
         bucket = new Bucket(unitAmount, unitAmount);

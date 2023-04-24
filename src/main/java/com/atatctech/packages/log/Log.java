@@ -1,5 +1,8 @@
 package com.atatctech.packages.log;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,14 +22,16 @@ public final class Log {
             this.baseTime = baseTime;
         }
 
-        public Time(SpecialCase specialCase) {
+        @Contract(pure = true)
+        public Time(@NotNull SpecialCase specialCase) {
             baseTime = (long) switch (specialCase) {
                 case FUTURE -> Float.POSITIVE_INFINITY;
                 case PAST -> Float.NEGATIVE_INFINITY;
             };
         }
 
-        public static Time parseString(String baseTime, String format) {
+        @Contract("_, _ -> new")
+        public static @NotNull Time parseString(String baseTime, String format) {
             SimpleDateFormat form = new SimpleDateFormat(format);
             try {
                 return new Time(form.parse(baseTime).getTime());
@@ -35,11 +40,13 @@ public final class Log {
             }
         }
 
-        public static Time parseString(String baseTime) {
+        @Contract("_ -> new")
+        public static @NotNull Time parseString(String baseTime) {
             return parseString(baseTime, "yyyy-MM-dd HH:mm:ss");
         }
 
-        protected static int getUnitCoefficients(Unit unit) {
+        @Contract(pure = true)
+        protected static int getUnitCoefficients(@NotNull Unit unit) {
             return switch (unit) {
                 case Millisecond -> 1;
                 case Second -> 1000;
@@ -66,18 +73,18 @@ public final class Log {
             return value * getUnitCoefficients(origin) / getUnitCoefficients(result);
         }
 
-        public static long calculateDuration(Runnable action, Unit unit) {
+        public static long calculateDuration(@NotNull Runnable action, Unit unit) {
             long baseTime = System.currentTimeMillis();
             action.run();
             long endTime = System.currentTimeMillis();
             return (endTime - baseTime) / getUnitCoefficients(unit);
         }
 
-        public static long calculateDuration(Time time1, Time time2, Unit unit) {
+        public static long calculateDuration(@NotNull Time time1, @NotNull Time time2, Unit unit) {
             return convert(Unit.Millisecond, unit, Math.abs(time1.getBaseTime() - time2.getBaseTime()));
         }
 
-        public static boolean theSame(Time time1, Time time2, Unit unit) {
+        public static boolean theSame(@NotNull Time time1, @NotNull Time time2, Unit unit) {
             return convert(Unit.Millisecond, unit, time1.getBaseTime()) == convert(Unit.Millisecond, unit, time2.getBaseTime());
         }
 
@@ -93,11 +100,11 @@ public final class Log {
             return getBaseTime() < System.currentTimeMillis();
         }
 
-        public Time forward(TimePeriod gap) {
+        public Time forward(@NotNull TimePeriod gap) {
             return new Time(getBaseTime() + gap.getMilliseconds());
         }
 
-        public Time backward(TimePeriod gap) {
+        public Time backward(@NotNull TimePeriod gap) {
             return new Time(getBaseTime() - gap.getMilliseconds());
         }
 
@@ -124,7 +131,7 @@ public final class Log {
             return new Milliseconds(getDuration());
         }
 
-        public long getDuration(Time time, Unit unit) {
+        public long getDuration(@NotNull Time time, Unit unit) {
             long duration = Math.abs(time.getBaseTime() - getBaseTime());
             return duration / getUnitCoefficients(unit);
         }
@@ -146,7 +153,7 @@ public final class Log {
         }
 
         public static class TimePeriod {
-            public static TimePeriod fromUnit(long n, Unit unit) {
+            public static TimePeriod fromUnit(long n, @NotNull Unit unit) {
                 return switch (unit) {
                     case Week -> new Weeks(n);
                     case Day -> new Days(n);

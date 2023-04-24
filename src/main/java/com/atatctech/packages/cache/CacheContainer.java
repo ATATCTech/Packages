@@ -1,5 +1,7 @@
 package com.atatctech.packages.cache;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +41,7 @@ public class CacheContainer<T> {
         return containsKey(key);
     }
 
-    public void put(CacheKey key, Cache<T> value) {
+    public void put(@NotNull CacheKey key, Cache<T> value) {
         inspect();
         key.rebirth();
         cacheMap.put(key, value);

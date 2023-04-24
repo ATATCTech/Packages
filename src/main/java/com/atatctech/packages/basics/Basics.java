@@ -6,6 +6,8 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -25,11 +27,13 @@ import java.util.regex.Pattern;
 
 public class Basics {
     public static class NativeHandler {
-        public static String readFile(String filename) throws IOException {
+        @Contract("_ -> new")
+        public static @NotNull String readFile(String filename) throws IOException {
             return readFile(new File(filename));
         }
 
-        public static String readFile(File file) throws IOException {
+        @Contract("_ -> new")
+        public static @NotNull String readFile(@NotNull File file) throws IOException {
             return new String(Files.readAllBytes(file.toPath()));
         }
 
@@ -69,7 +73,7 @@ public class Basics {
             return base64;
         }
 
-        public static String[] stringArrayList2stringArray(ArrayList<String> arrayList) {
+        public static String @NotNull [] stringArrayList2stringArray(@NotNull ArrayList<String> arrayList) {
             String[] res = new String[arrayList.size()];
             for (int i = 0; i < arrayList.size(); i++) {
                 res[i] = arrayList.get(i);
@@ -90,7 +94,7 @@ public class Basics {
     }
 
     public static class TextClass {
-        public static String stringToUnicode(String unicode) {
+        public static @NotNull String stringToUnicode(@NotNull String unicode) {
             char[] chars = unicode.toCharArray();
             StringBuilder builder = new StringBuilder();
             for (char aChar : chars) {
@@ -110,7 +114,7 @@ public class Basics {
             return builder.toString();
         }
 
-        public static String unicodeToString(String s) {
+        public static @NotNull String unicodeToString(@NotNull String s) {
             String[] split = s.split("\\\\");
 
             StringBuilder builder = new StringBuilder();
@@ -134,7 +138,7 @@ public class Basics {
             return Pattern.matches("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$", str);
         }
 
-        public static String chinese2spell(String chinese) {
+        public static @NotNull String chinese2spell(String chinese) {
             if (chinese == null || chinese.isEmpty()) {
                 return "";
             }
@@ -196,7 +200,7 @@ public class Basics {
             return (float) matchingCases / totalCases;
         }
 
-        public static String getSHA256(String str) {
+        public static String getSHA256(@NotNull String str) {
             MessageDigest messageDigest;
             String shaString;
             try {
@@ -209,7 +213,7 @@ public class Basics {
             return shaString;
         }
 
-        public static String getMD5(String str) {
+        public static String getMD5(@NotNull String str) {
             MessageDigest messageDigest;
             String md5String;
             try {
@@ -222,7 +226,7 @@ public class Basics {
             return md5String;
         }
 
-        private static String byte2hex(byte[] bytes) {
+        private static @NotNull String byte2hex(byte @NotNull [] bytes) {
             StringBuilder stringBuilder = new StringBuilder();
             String temp;
             for (byte aByte : bytes) {
@@ -235,7 +239,7 @@ public class Basics {
             return stringBuilder.toString();
         }
 
-        public static String[] split(String content, String separator) {
+        public static String[] split(@NotNull String content, String separator) {
             if (content.isEmpty()) return new String[]{""};
             LinkedList<String> res = new LinkedList<>();
             int from_index = 0;
@@ -254,7 +258,7 @@ public class Basics {
             return res.toArray(String[]::new);
         }
 
-        public static String[] split(String content, char separator) {
+        public static String[] split(@NotNull String content, char separator) {
             LinkedList<String> res = new LinkedList<>();
             int from_index = 0;
             int content_len = content.length();
