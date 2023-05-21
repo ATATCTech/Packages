@@ -29,12 +29,22 @@ public class Basics {
     public static class NativeHandler {
         @Contract("_ -> new")
         public static @NotNull String readFile(String filename) throws IOException {
-            return readFile(new File(filename));
+            return readFile(filename, true);
+        }
+
+        public static @NotNull String readFile(String filename, boolean convertLineSeparator) throws IOException {
+            return readFile(new File(filename), convertLineSeparator);
+        }
+
+        @Contract("_, _ -> new")
+        public static @NotNull String readFile(@NotNull File file, boolean convertLineSeparator) throws IOException {
+            String r = new String(Files.readAllBytes(file.toPath()));
+            return convertLineSeparator ? r.replaceAll("\r\n", "\n") : r;
         }
 
         @Contract("_ -> new")
         public static @NotNull String readFile(@NotNull File file) throws IOException {
-            return new String(Files.readAllBytes(file.toPath()));
+            return readFile(file, true);
         }
 
         public static boolean writeFile(String filename, String content, boolean append) {
