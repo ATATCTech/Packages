@@ -140,8 +140,12 @@ public final class Log {
             return TimePeriod.fromUnit(getDuration(time, unit), unit);
         }
 
+        public long getBaseTime(Unit unit) {
+            return baseTime / getUnitCoefficients(unit);
+        }
+
         public long getBaseTime() {
-            return baseTime;
+            return getBaseTime(Unit.Millisecond);
         }
 
         public enum Unit {
