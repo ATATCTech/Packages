@@ -19,6 +19,7 @@ public final class Log {
 
         public Time(long baseTime) {
             if (baseTime < 0) throw new IllegalArgumentException("`baseTime` must be a positive integer.");
+            if (baseTime < 9999999999L) baseTime = convert(Unit.Second, Unit.Millisecond, baseTime);
             this.baseTime = baseTime;
         }
 
@@ -63,14 +64,21 @@ public final class Log {
         }
 
         public static long calculateDuration(@NotNull Runnable action, @NotNull Unit unit) {
+            return convert(Unit.Millisecond, unit, calculateDuration(action));
+        }
+
+        public static long calculateDuration(@NotNull Runnable action) {
             long baseTime = System.currentTimeMillis();
             action.run();
-            long endTime = System.currentTimeMillis();
-            return (endTime - baseTime) / getUnitCoefficients(unit);
+            return System.currentTimeMillis() - baseTime;
         }
 
         public static long calculateDuration(@NotNull Time time1, @NotNull Time time2, @NotNull Unit unit) {
-            return convert(Unit.Millisecond, unit, Math.abs(time1.getBaseTime() - time2.getBaseTime()));
+            return convert(Unit.Millisecond, unit, calculateDuration(time1, time2));
+        }
+
+        public static long calculateDuration(@NotNull Time time1, @NotNull Time time2) {
+            return Math.abs(time1.getBaseTime() - time2.getBaseTime());
         }
 
         public static boolean theSame(@NotNull Time time1, @NotNull Time time2, @NotNull Unit unit) {
@@ -132,12 +140,11 @@ public final class Log {
         }
 
         public long getDuration(@NotNull Unit unit) {
-            long duration = Math.abs(System.currentTimeMillis() - getBaseTime());
-            return duration / getUnitCoefficients(unit);
+            return convert(Unit.Millisecond, unit, getDuration());
         }
 
         public long getDuration() {
-            return Math.abs(System.currentTimeMillis() - getBaseTime());
+            return getDuration(this);
         }
 
         public @NotNull Milliseconds getDurationAsGap() {
@@ -145,8 +152,11 @@ public final class Log {
         }
 
         public long getDuration(@NotNull Time time, @NotNull Unit unit) {
-            long duration = Math.abs(time.getBaseTime() - getBaseTime());
-            return duration / getUnitCoefficients(unit);
+            return convert(Unit.Millisecond, unit, getDuration(time));
+        }
+
+        public long getDuration(@NotNull Time time) {
+            return Math.abs(time.getBaseTime() - getBaseTime());
         }
 
         public @NotNull TimePeriod getDurationAsGap(@NotNull Time time, @NotNull Unit unit) {
@@ -154,11 +164,15 @@ public final class Log {
         }
 
         public long getBaseTime(@NotNull Unit unit) {
-            return baseTime / getUnitCoefficients(unit);
+            return convert(Unit.Millisecond, unit, getBaseTime());
         }
 
         public long getBaseTime() {
-            return getBaseTime(Unit.Millisecond);
+            return baseTime;
+        }
+
+        public long unix() {
+            return getBaseTime(Unit.Second);
         }
 
         public enum Unit {

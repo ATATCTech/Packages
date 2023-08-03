@@ -5,7 +5,7 @@ import com.atatctech.packages.log.Log;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class RateLimiter {
-    protected Log.Time lastReplenishment = new Log.Time();
+    protected @NotNull Log.Time lastReplenishment = new Log.Time();
     protected final long unitAmount, interval;
     protected final Bucket bucket;
 
@@ -15,7 +15,7 @@ public abstract class RateLimiter {
         bucket = new Bucket(unitAmount, unitAmount);
     }
 
-    public RateLimiter(long unitAmount, Log.Time.@NotNull TimePeriod interval) {
+    public RateLimiter(long unitAmount, @NotNull Log.Time.TimePeriod interval) {
         this.unitAmount = unitAmount;
         this.interval = interval.getMilliseconds();
         bucket = new Bucket(unitAmount, unitAmount);
