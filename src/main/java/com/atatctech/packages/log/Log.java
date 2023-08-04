@@ -59,8 +59,8 @@ public final class Log {
             };
         }
 
-        public static long convert(@NotNull Unit origin, @NotNull Unit result, long value) {
-            return value * getUnitCoefficients(origin) / getUnitCoefficients(result);
+        public static long convert(@NotNull Unit from, @NotNull Unit to, long value) {
+            return value * getUnitCoefficients(from) / getUnitCoefficients(to);
         }
 
         public static long calculateDuration(@NotNull Runnable action, @NotNull Unit unit) {
