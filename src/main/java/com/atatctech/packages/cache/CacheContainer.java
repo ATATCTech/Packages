@@ -1,6 +1,7 @@
 package com.atatctech.packages.cache;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CacheContainer<T> {
     @FunctionalInterface
     public interface Filter {
-        boolean drop(CacheKey key, Cache<?> value);
+        boolean drop(@NotNull CacheKey key, @NotNull Cache<?> value);
     }
-    protected Map<CacheKey, Cache<T>> cacheMap = new ConcurrentHashMap<>();
+    protected final Map<CacheKey, Cache<T>> cacheMap = new ConcurrentHashMap<>();
     protected Filter filter = (key, value) -> false;
 
     public CacheContainer() {
@@ -29,39 +30,36 @@ public class CacheContainer<T> {
         });
     }
 
-    public boolean containsKey(CacheKey key) {
+    public boolean containsKey(@NotNull CacheKey key) {
         return cacheMap.containsKey(key);
     }
 
-    public boolean containsValue(Cache<?> value) {
+    public boolean containsValue(@NotNull Cache<?> value) {
         return cacheMap.containsValue(value);
     }
 
-    public boolean contains(CacheKey key) {
+    public boolean contains(@NotNull CacheKey key) {
         return containsKey(key);
     }
 
-    public void put(@NotNull CacheKey key, Cache<T> value) {
+    public void put(@NotNull CacheKey key, @NotNull Cache<T> value) {
         inspect();
         key.rebirth();
         cacheMap.put(key, value);
     }
 
-    public void put(Object key, Cache<T> value) {
+    public void put(@NotNull Object key, @NotNull Cache<T> value) {
         put(new CacheKey(key), value);
     }
 
-    public void put(Object key, Object value) {
-        put(new CacheKey(key), new Cache<>(value));
-    }
-
-    public Cache<T> get(CacheKey key) {
+    public @Nullable Cache<T> get(@NotNull CacheKey key) {
         inspect();
         return cacheMap.get(key);
     }
 
-    public T getCache(CacheKey key) {
-        return get(key).getCache();
+    public @Nullable T getCache(@NotNull CacheKey key) {
+        Cache<T> cache = get(key);
+        return cache == null ? null : cache.getCache();
     }
 
     @Override

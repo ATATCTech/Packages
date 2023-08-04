@@ -1,55 +1,57 @@
 package com.atatctech.packages.cache;
 
 import com.atatctech.packages.log.Log;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Cache<T> {
-    protected Log.Time expire = Log.Time.FUTURE;
-    protected Log.Time.TimePeriod refreshInterval;
-    private final T object;
+    protected @NotNull Log.Time expire = Log.Time.FUTURE;
+    protected @Nullable Log.Time.TimePeriod refreshInterval;
+    private final @NotNull T object;
 
-    public Cache(T object) {
+    public Cache(@NotNull T object) {
         this.object = object;
     }
 
-    public Cache(T object, Log.Time.TimePeriod ttl) {
+    public Cache(@NotNull T object, @NotNull Log.Time.TimePeriod ttl) {
         this.object = object;
         setTTL(ttl);
     }
 
-    public Cache(T object, Log.Time expire) {
+    public Cache(@NotNull T object, @NotNull Log.Time expire) {
         this.object = object;
         setExpire(expire);
     }
 
-    public void setExpire(Log.Time expire) {
+    public void setExpire(@NotNull Log.Time expire) {
         this.expire = expire;
     }
 
-    public void setTTL(Log.Time.TimePeriod ttl) {
+    public void setTTL(@NotNull Log.Time.TimePeriod ttl) {
         setExpire(new Log.Time().forward(ttl));
     }
 
-    public void setRefreshInterval(Log.Time.TimePeriod refreshInterval) {
+    public void setRefreshInterval(@Nullable Log.Time.TimePeriod refreshInterval) {
         this.refreshInterval = refreshInterval;
     }
 
-    public Log.Time.TimePeriod getRefreshInterval() {
+    public @Nullable Log.Time.TimePeriod getRefreshInterval() {
         return refreshInterval;
     }
 
-    public Log.Time getExpire() {
+    public @NotNull Log.Time getExpire() {
         return expire;
     }
 
-    public T getObject() {
+    public @NotNull T getObject() {
         return object;
     }
 
-    public T getCache() {
+    public @NotNull T getCache() {
         return getObject();
     }
 
-    public Class<?> getObjectClass() {
+    public @NotNull Class<?> getObjectClass() {
         return object.getClass();
     }
 

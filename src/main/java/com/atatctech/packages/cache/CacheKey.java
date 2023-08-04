@@ -1,22 +1,24 @@
 package com.atatctech.packages.cache;
 
 import com.atatctech.packages.log.Log;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class CacheKey {
     protected final Object index;
-    protected Log.Time birth = new Log.Time();
-    public CacheKey(Object index) {
+    protected @NotNull Log.Time birth = new Log.Time();
+    public CacheKey(@NotNull Object index) {
         this.index = index;
     }
 
-    public CacheKey(String index) {
+    public CacheKey(@NotNull String index) {
         this.index = index;
     }
 
-    public CacheKey(String... keywords) {
+    public CacheKey(@NotNull String @NotNull ... keywords) {
         index = Arrays.asList(keywords);
     }
 
@@ -28,12 +30,12 @@ public class CacheKey {
         return birth.getDuration();
     }
 
-    public Log.Time.Milliseconds ageAsGap() {
+    public @NotNull Log.Time.Milliseconds ageAsGap() {
         return birth.getDurationAsGap();
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) return true;
         if (!(o instanceof CacheKey key)) return false;
         return Objects.equals(index, key.index);
