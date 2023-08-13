@@ -7,17 +7,19 @@ plugins {
 apply plugin: 'maven-publish'
 
 group 'com.atatctech'
-version '1.0.7'
+version '1.0.8'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.jetbrains:annotations:23.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'com.belerweb:pinyin4j:2.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'org.jetbrains:annotations:23.0.0'
 }
 
 java {
