@@ -43,7 +43,7 @@ public final class DataCheck {
     }
 
     public static boolean displayableCheck(@Nullable String string) {
-        return string != null && string.matches("^[\\S ]+$");
+        return string != null && string.matches("^[\\S ]*$");
     }
 
     public static boolean displayNameCheck(@Nullable String displayName, int minLength, int maxLength) {
