@@ -6,9 +6,13 @@ import org.jetbrains.annotations.Nullable;
 public abstract class DataListenerChain<T> implements DataListener<T> {
     private @Nullable DataListenerChain<T> chain;
 
-    synchronized public final void addChain(@NotNull DataListenerChain<T> chain) {
+    public final void addChain(@NotNull DataListenerChain<T> chain) {
         if (this.chain == null) this.chain = chain;
         else this.chain.addChain(chain);
+    }
+
+    public final @Nullable DataListenerChain<T> skip() {
+        return chain;
     }
 
     protected void onChangeImpl(@NotNull T from, @NotNull T to) {
