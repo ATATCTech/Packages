@@ -19,14 +19,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
-public class Basics {
-    public static class NativeHandler {
+public final class Basics {
+    public static final class NativeHandler {
         @Contract("_ -> new")
         public static @NotNull String readFile(String filename) throws IOException {
             return readFile(filename, true);
@@ -73,7 +70,7 @@ public class Basics {
             return writeFile(file, content, false);
         }
     }
-    public static class Conversion {
+    public static final class Conversion {
         public static String BufferedImage2Base64(BufferedImage bufferedImage) throws IOException {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "jpeg", stream);
@@ -103,7 +100,7 @@ public class Basics {
         }
     }
 
-    public static class TextClass {
+    public static final class TextClass {
         public static @NotNull String stringToUnicode(@NotNull String unicode) {
             char[] chars = unicode.toCharArray();
             StringBuilder builder = new StringBuilder();
@@ -283,6 +280,21 @@ public class Basics {
             }
 
             return res.toArray(String[]::new);
+        }
+    }
+    public static final class ListClass {
+        @SafeVarargs
+        public static <E> @NotNull List<E> joinAsUniqueList(@NotNull Collection<E> @NotNull ... collections) {
+            Set<E> set = new LinkedHashSet<>();
+            for (Collection<E> collection : collections) set.addAll(collection);
+            return set.stream().toList();
+        }
+
+        @SafeVarargs
+        public static <E> @NotNull Set<E> joinAsSet(@NotNull Collection<E> @NotNull ... collections) {
+            Set<E> set = new LinkedHashSet<>();
+            for (Collection<E> collection : collections) set.addAll(collection);
+            return set;
         }
     }
 }
