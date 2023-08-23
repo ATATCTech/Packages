@@ -18,13 +18,11 @@ public final class Log {
         }
 
         public Time(long baseTime) {
-            if (baseTime < 0) throw new IllegalArgumentException("`baseTime` must be a positive integer.");
             if (baseTime < 9999999999L) baseTime = convert(Unit.Second, Unit.Millisecond, baseTime);
             this.baseTime = baseTime;
         }
 
         public Time(long baseTime, @NotNull Unit unit) {
-            if (baseTime < 0) throw new IllegalArgumentException("`baseTime` must be a positive integer.");
             this.baseTime = convert(unit, Unit.Millisecond, baseTime);
         }
 
