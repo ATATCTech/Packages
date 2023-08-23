@@ -144,7 +144,7 @@ public final class Log {
         }
 
         public long getDuration() {
-            return getDuration(this);
+            return getDuration(new Time());
         }
 
         public @NotNull Milliseconds getDurationAsGap() {
@@ -156,7 +156,7 @@ public final class Log {
         }
 
         public long getDuration(@NotNull Time time) {
-            return Math.abs(time.getBaseTime() - getBaseTime());
+            return calculateDuration(this, time);
         }
 
         public @NotNull TimePeriod getDurationAsGap(@NotNull Time time, @NotNull Unit unit) {
