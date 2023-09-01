@@ -8,26 +8,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class JSON implements Cloneable {
-    public static final ObjectMapper objectMapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+public interface JSON extends Cloneable {
+    ObjectMapper objectMapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-    @Override
-    public @NotNull JSON clone() {
-        try {
-            return (JSON) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
-
-    public static @NotNull String stringify(@Nullable Object object) {
+    static @NotNull String stringify(@Nullable Object object) {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException ignored) {
             return "";
         }
     }
-    public static <T> @Nullable T parseString(@Nullable String json, @NotNull Class<T> classOf) {
+    static <T> @Nullable T parseString(@Nullable String json, @NotNull Class<T> classOf) {
         if (json == null) return null;
         try {
             return objectMapper.readValue(json, classOf);
@@ -35,7 +26,7 @@ public abstract class JSON implements Cloneable {
             return null;
         }
     }
-    public static <T> @Nullable T parseString(@Nullable String json, @NotNull TypeReference<T> valueTypeRef) {
+    static <T> @Nullable T parseString(@Nullable String json, @NotNull TypeReference<T> valueTypeRef) {
         if (json == null) return null;
         try {
             return objectMapper.readValue(json, valueTypeRef);
@@ -44,7 +35,7 @@ public abstract class JSON implements Cloneable {
         }
     }
 
-    public static <T> @Nullable T parseString(@Nullable String json, @NotNull JavaType valueType) {
+    static <T> @Nullable T parseString(@Nullable String json, @NotNull JavaType valueType) {
         if (json == null) return null;
         try {
             return objectMapper.readValue(json, valueType);
@@ -53,7 +44,7 @@ public abstract class JSON implements Cloneable {
         }
     }
 
-    public @NotNull String stringify() {
+    default @NotNull String stringify() {
         try {
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException ignored) {
